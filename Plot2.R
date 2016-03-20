@@ -1,0 +1,10 @@
+setwd("C:/Users/zambezis/Desktop/Data Science Coursera/Exploratory Analysis")
+
+my_data <- file("./exdata-data-household_power_consumption (1)/household_power_consumption.txt")
+plot_data <- read.table(text = grep("^[1,2]/2/2007", readLines(my_data), value = TRUE), col.names = c("Date", "Time", "Global_active_power", "Global_reactive_power", "Voltage", "Global_intensity", "Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), sep = ";", header = TRUE)
+plot_data$x <- paste(plot_data$Date,plot_data$Time)
+library(lubridate)
+plot_data$x <- dmy_hms(as.factor(plot_data$x))
+plot_2 <- with(plot_data,plot(x,Global_active_power, type = "l", xlab = "", ylab = "Global Active Power (Kilowatts)"))
+dev.copy(png, file = "Plot2.png")
+dev.off()
